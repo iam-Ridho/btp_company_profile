@@ -36,10 +36,11 @@ class DosenResource extends Resource
                     Forms\Components\TextInput::make('nip')
                         ->label('NIP')
                         ->nullable()
-                        ->numeric()
+                        ->type('text')
                         ->maxLength(20)
                         ->minLength(1)
-                        ->placeholder('Masukkan NIP (maks. 20 angka)'),
+                        ->placeholder('Masukkan NIP (maks. 20 angka)')
+                        ->rule('regex:/^[0-9]+$/'),
 
                     Forms\Components\TextInput::make('nama')
                         ->label('Nama Dosen')
@@ -49,6 +50,7 @@ class DosenResource extends Resource
                     SpatieMediaLibraryFileUpload::make('photo')
                         ->label('Foto Dosen')
                         ->collection('photo')
+                        ->disk('public')
                         ->image()
                         ->imageResizeMode('cover')
                         ->imageCropAspectRatio('1:1')

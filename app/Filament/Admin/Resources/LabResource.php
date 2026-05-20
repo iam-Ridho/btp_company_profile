@@ -47,6 +47,7 @@ class LabResource extends Resource
                     SpatieMediaLibraryFileUpload::make('photo')
                         ->label('Foto Lab')
                         ->collection('photo')
+                        ->disk('public')
                         ->image()
                         ->imageResizeMode('cover')
                         ->imageCropAspectRatio('16:9')
