@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <!-- Alpine.js for interactive components -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
@@ -70,11 +70,11 @@
                 
                 <!-- Desktop Menu -->
                 <nav class="hidden md:flex items-center h-full">
-                    <a href="/" class="h-full flex items-center px-4 text-sm font-semibold text-white whitespace-nowrap bg-[#cf2e2e]">HOME</a>
+                    <a href="/" class="h-full flex items-center px-4 text-sm font-semibold text-white whitespace-nowrap {{ Request::is('/') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] transition-colors' }}">HOME</a>
                     
                     <!-- PROFIL KAMI Dropdown -->
                     <div class="relative group h-full flex items-center">
-                        <a href="#" class="h-full flex items-center px-4 text-sm font-semibold text-white whitespace-nowrap hover:bg-[#cf2e2e] transition-colors">
+                        <a href="#" class="h-full flex items-center px-4 text-sm font-semibold text-white whitespace-nowrap {{ Request::is('visi-misi') || Request::is('data-dosen') || Request::is('data-plp-admin') || Request::is('laboratorium*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] transition-colors' }}">
                             PROFIL KAMI <i class="fa fa-caret-down ml-1"></i>
                         </a>
                         <div class="absolute top-full left-0 hidden group-hover:block w-56 bg-white shadow-lg border-t-2 border-btp-red z-50">
@@ -85,23 +85,15 @@
                         </div>
                     </div>
                     
-                    <!-- BERITA & INFORMASI Dropdown -->
-                    <div class="relative group h-full flex items-center">
-                        <a href="#" class="h-full flex items-center px-4 text-sm font-semibold text-white whitespace-nowrap hover:bg-[#cf2e2e] transition-colors">
-                            BERITA & INFORMASI <i class="fa fa-caret-down ml-1"></i>
-                        </a>
-                        <div class="absolute top-full left-0 hidden group-hover:block w-56 bg-white shadow-lg border-t-2 border-btp-red z-50">
-                            <a href="/berita" class="block px-4 py-3 text-sm text-btp-text hover:bg-gray-100 hover:text-btp-red border-b border-gray-100">Berita</a>
-                            <a href="#" class="block px-4 py-3 text-sm text-btp-text hover:bg-gray-100 hover:text-btp-red border-b border-gray-100">Pengumuman</a>
-                            <a href="#" class="block px-4 py-3 text-sm text-btp-text hover:bg-gray-100 hover:text-btp-red">Kegiatan Prodi</a>
-                        </div>
-                    </div>
+                    <a href="/berita" class="h-full flex items-center px-4 text-sm font-semibold text-white whitespace-nowrap {{ Request::is('berita*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] transition-colors' }}">
+                        BERITA & INFORMASI
+                    </a>
                     
 
                     
                     <!-- KEMAHASISWAAN Dropdown -->
                     <div class="relative group h-full flex items-center">
-                        <a href="#" class="h-full flex items-center px-4 text-sm font-semibold text-white whitespace-nowrap hover:bg-[#cf2e2e] transition-colors">
+                        <a href="#" class="h-full flex items-center px-4 text-sm font-semibold text-white whitespace-nowrap {{ Request::is('kemahasiswaan*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] transition-colors' }}">
                             KEMAHASISWAAN <i class="fa fa-caret-down ml-1"></i>
                         </a>
                         <div class="absolute top-full left-0 hidden group-hover:block w-56 bg-white shadow-lg border-t-2 border-btp-red z-50">
@@ -110,8 +102,8 @@
                         </div>
                     </div>
                     
-                    <a href="#" class="h-full flex items-center px-4 text-sm font-semibold text-white whitespace-nowrap hover:bg-[#cf2e2e] transition-colors">LSP</a>
-                    <a href="#" class="h-full flex items-center px-4 text-sm font-semibold text-white whitespace-nowrap hover:bg-[#cf2e2e] transition-colors">PRODUK</a>
+                    <a href="#" class="h-full flex items-center px-4 text-sm font-semibold text-white whitespace-nowrap {{ Request::is('lsp*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] transition-colors' }}">LSP</a>
+                    <a href="/produk" class="h-full flex items-center px-4 text-sm font-semibold text-white whitespace-nowrap {{ Request::is('produk*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] transition-colors' }}">PRODUK</a>
                     
                     <button class="text-white hover:bg-[#cf2e2e] px-4 h-full flex items-center justify-center transition-colors">
                         <i class="fa fa-search"></i>
@@ -129,11 +121,11 @@
             <!-- Mobile Menu -->
             <div x-show="mobileMenuOpen" x-cloak class="md:hidden bg-[#333333] border-t border-gray-600 pb-4">
                 <nav class="flex flex-col">
-                    <a href="{{ url('/') }}" class="block px-4 py-3 text-sm font-medium text-white hover:bg-[#cf2e2e] hover:text-white">HOME</a>
+                    <a href="{{ url('/') }}" class="block px-4 py-3 text-sm font-medium text-white {{ Request::is('/') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] hover:text-white' }}">HOME</a>
                     
                     <!-- Profil Kami Mobile -->
                     <div x-data="{ open: false }" class="relative">
-                        <button @click="open = !open" class="w-full flex justify-between items-center px-4 py-3 text-sm font-medium text-white hover:bg-[#cf2e2e]">
+                        <button @click="open = !open" class="w-full flex justify-between items-center px-4 py-3 text-sm font-medium text-white {{ Request::is('visi-misi') || Request::is('data-dosen') || Request::is('data-plp-admin') || Request::is('laboratorium*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e]' }}">
                             PROFIL KAMI <i class="fa" :class="open ? 'fa-caret-up' : 'fa-caret-down'"></i>
                         </button>
                         <div x-show="open" class="bg-[#444444]">
@@ -144,17 +136,9 @@
                         </div>
                     </div>
 
-                    <!-- Berita & Informasi Mobile -->
-                    <div x-data="{ open: false }" class="relative">
-                        <button @click="open = !open" class="w-full flex justify-between items-center px-4 py-3 text-sm font-medium text-white hover:bg-[#cf2e2e]">
-                            BERITA & INFORMASI <i class="fa" :class="open ? 'fa-caret-up' : 'fa-caret-down'"></i>
-                        </button>
-                        <div x-show="open" class="bg-[#444444]">
-                            <a href="/berita" class="block pl-8 pr-4 py-2 text-sm font-medium text-gray-200 hover:text-white hover:bg-[#cf2e2e]">Berita</a>
-                            <a href="#" class="block pl-8 pr-4 py-2 text-sm font-medium text-gray-200 hover:text-white hover:bg-[#cf2e2e]">Pengumuman</a>
-                            <a href="#" class="block pl-8 pr-4 py-2 text-sm font-medium text-gray-200 hover:text-white hover:bg-[#cf2e2e]">Kegiatan Prodi</a>
-                        </div>
-                    </div>
+                    <a href="/berita" class="block px-4 py-3 text-sm font-medium text-white {{ Request::is('berita*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] hover:text-white' }}">
+                        BERITA & INFORMASI
+                    </a>
 
 
                     
@@ -169,8 +153,8 @@
                         </div>
                     </div>
 
-                    <a href="#" class="block px-4 py-3 text-sm font-medium text-white hover:bg-[#cf2e2e] hover:text-white">LSP</a>
-                    <a href="#" class="block px-4 py-3 text-sm font-medium text-white hover:bg-[#cf2e2e] hover:text-white">PRODUK</a>
+                    <a href="#" class="block px-4 py-3 text-sm font-medium text-white {{ Request::is('lsp*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] hover:text-white' }}">LSP</a>
+                    <a href="/produk" class="block px-4 py-3 text-sm font-medium text-white {{ Request::is('produk*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] hover:text-white' }}">PRODUK</a>
                 </nav>
             </div>
         </div>
@@ -205,23 +189,14 @@
                 <div class="widget">
                     <h3 class="text-xl font-serif text-btp-heading mb-4">Pos-pos Terbaru</h3>
                     <ul class="space-y-3">
+                        @php
+                            $recentPosts = \App\Models\News::latest()->take(5)->get();
+                        @endphp
+                        @foreach($recentPosts as $post)
                         <li>
-                            <a href="#" class="text-btp-red hover:text-btp-red-hover hover:underline transition-colors block border-b border-btp-border pb-2">PELATIHAN PERAKITAN DAN PENGAPLIKASIKAN ALAT PENYIRAMAN OTOMATIS</a>
+                            <a href="/berita/{{ $post->id }}" class="text-btp-red hover:text-btp-red-hover hover:underline transition-colors block border-b border-btp-border pb-2">{{ $post->title }}</a>
                         </li>
-                        <li>
-                            <a href="#" class="text-btp-red hover:text-btp-red-hover hover:underline transition-colors block border-b border-btp-border pb-2">PENGABDIAN PADA MASYARAKAT PENYULUHAN PEMELIHARAAN KEBERSIHAN...</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-btp-red hover:text-btp-red-hover hover:underline transition-colors block border-b border-btp-border pb-2">PENGABDIAN PADA MASYARAKAT TANAMAN HIAS PEMIKAT PESONA...</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Archive Widget -->
-                <div class="widget">
-                    <h3 class="text-xl font-serif text-btp-heading mb-4">Arsip</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-btp-red hover:text-btp-red-hover hover:underline transition-colors">Desember 2021</a></li>
+                        @endforeach
                     </ul>
                 </div>
 
@@ -229,7 +204,16 @@
                 <div class="widget">
                     <h3 class="text-xl font-serif text-btp-heading mb-4">Kategori</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-btp-red hover:text-btp-red-hover hover:underline transition-colors">Uncategorized</a></li>
+                        @php
+                            $categories = \App\Models\News::whereNotNull('kategori')->where('kategori', '!=', '')->select('kategori')->distinct()->get();
+                        @endphp
+                        @foreach($categories as $cat)
+                        <li>
+                            <a href="/berita?kategori={{ urlencode($cat->kategori) }}" class="text-btp-red hover:text-btp-red-hover hover:underline transition-colors {{ Request::get('kategori') == $cat->kategori ? 'font-bold' : '' }}">
+                                {{ $cat->kategori }}
+                            </a>
+                        </li>
+                        @endforeach
                     </ul>
                 </div>
 

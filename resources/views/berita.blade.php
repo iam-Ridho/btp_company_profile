@@ -9,21 +9,28 @@
 @foreach($beritas as $berita)
 <article class="border-b border-btp-border pb-8 mb-8">
     <h2 class="text-2xl font-serif mb-3">
-        <a href="#" class="text-btp-heading hover:text-btp-red transition-colors">{{ $berita['title'] }}</a>
+        <a href="/berita/{{ $berita->id }}" class="text-btp-heading hover:text-btp-red transition-colors">{{ $berita->title }}</a>
     </h2>
     <div class="text-sm text-btp-text mb-4 flex items-center space-x-4">
-        <span><i class="fa fa-calendar text-btp-red mr-1"></i> {{ $berita['date'] }}</span>
-        <span><i class="fa fa-user text-btp-red mr-1"></i> by {{ $berita['author'] }}</span>
-        <span><i class="fa fa-folder-open-o text-btp-red mr-1"></i> {{ $berita['category'] }}</span>
+        <span><i class="fa fa-calendar text-btp-red mr-1"></i> {{ $berita->published_at ? \Carbon\Carbon::parse($berita->published_at)->translatedFormat('d F Y') : '-' }}</span>
+        <span><i class="fa fa-user text-btp-red mr-1"></i> by {{ $berita->author ?? 'Admin' }}</span>
+        <span><i class="fa fa-folder-open-o text-btp-red mr-1"></i> {{ $berita->kategori ?? 'Uncategorized' }}</span>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="overflow-hidden">
-            <img src="{{ $berita['image'] }}" alt="{{ $berita['title'] }}" class="w-full h-auto hover:scale-105 transition-transform duration-300">
+        <div class="overflow-hidden bg-gray-100 flex items-center justify-center h-56 md:h-64 rounded-lg">
+            @if($berita->getFirstMediaUrl('featured'))
+                <img src="{{ $berita->getFirstMediaUrl('featured') }}" alt="{{ $berita->title }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+            @else
+                <i class="fa fa-newspaper-o text-5xl text-gray-400"></i>
+            @endif
         </div>
         <div>
             <p class="text-btp-text leading-relaxed">
-                {{ $berita['excerpt'] }}
+                {{ $berita->excerpt }}
             </p>
+            <div class="mt-4">
+                <a href="/berita/{{ $berita->id }}" class="text-btp-red font-semibold hover:underline">Baca Selengkapnya <i class="fa fa-long-arrow-right ml-1"></i></a>
+            </div>
         </div>
     </div>
 </article>

@@ -20,48 +20,45 @@
 
 @section('content')
 
-<!-- Article 1 -->
-<article class="border-b border-btp-border pb-8">
-    <h2 class="text-2xl font-serif mb-3">
-        <a href="#" class="text-btp-heading hover:text-btp-red transition-colors">PELATIHAN PERAKITAN DAN PENGAPLIKASIKAN ALAT PENYIRAMAN OTOMATIS</a>
-    </h2>
-    <div class="text-sm text-btp-text mb-4 flex items-center space-x-4">
-        <span><i class="fa fa-calendar text-btp-red mr-1"></i> Desember 18, 2021</span>
-        <span><i class="fa fa-user text-btp-red mr-1"></i> by Admin</span>
-        <span><i class="fa fa-folder-open-o text-btp-red mr-1"></i> Uncategorized</span>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="overflow-hidden">
-            <img src="https://btp.politanisamarinda.ac.id/wp-content/uploads/2021/12/WhatsApp-Image-2021-12-15-at-9.49.53-AM-720x445.jpeg" alt="Pelatihan" class="w-full h-auto hover:scale-105 transition-transform duration-300">
-        </div>
-        <div>
-            <p class="text-btp-text leading-relaxed">
-                Pembibitan Kelapa Sawit, Laboratorium Kebun Percontohan Budidaya Tanaman Perkebunan Politeknik Pertanian Negeri Samarinda, Tanggal 15-17 Desember 2021
-            </p>
-        </div>
-    </div>
-</article>
+<div class="mb-8">
+    <h1 class="text-3xl font-serif text-btp-heading mb-2">Berita & Informasi Terkini</h1>
+    <div class="h-1 w-20 bg-btp-red"></div>
+</div>
 
-<!-- Article 2 -->
-<article class="border-b border-btp-border pb-8">
+@foreach($beritas as $berita)
+<article class="border-b border-btp-border pb-8 mb-8">
     <h2 class="text-2xl font-serif mb-3">
-        <a href="#" class="text-btp-heading hover:text-btp-red transition-colors">PENGABDIAN PADA MASYARAKAT PENYULUHAN PEMELIHARAAN KEBERSIHAN LINGKUNGAN</a>
+        <a href="/berita/{{ $berita->id }}" class="text-btp-heading hover:text-btp-red transition-colors">{{ $berita->title }}</a>
     </h2>
     <div class="text-sm text-btp-text mb-4 flex items-center space-x-4">
-        <span><i class="fa fa-calendar text-btp-red mr-1"></i> Desember 11, 2021</span>
-        <span><i class="fa fa-user text-btp-red mr-1"></i> by Admin</span>
-        <span><i class="fa fa-folder-open-o text-btp-red mr-1"></i> Uncategorized</span>
+        <span><i class="fa fa-calendar text-btp-red mr-1"></i> {{ $berita->published_at ? \Carbon\Carbon::parse($berita->published_at)->translatedFormat('d F Y') : '-' }}</span>
+        <span><i class="fa fa-user text-btp-red mr-1"></i> by {{ $berita->author ?? 'Admin' }}</span>
+        <span><i class="fa fa-folder-open-o text-btp-red mr-1"></i> {{ $berita->kategori ?? 'Uncategorized' }}</span>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="overflow-hidden">
-            <img src="https://btp.politanisamarinda.ac.id/wp-content/uploads/2021/12/WhatsApp-Image-2021-12-14-at-20.43.56-720x445.jpeg" alt="Pengabdian" class="w-full h-auto hover:scale-105 transition-transform duration-300">
+        <div class="overflow-hidden bg-gray-100 flex items-center justify-center h-56 md:h-64 rounded-lg">
+            @if($berita->getFirstMediaUrl('featured'))
+                <img src="{{ $berita->getFirstMediaUrl('featured') }}" alt="{{ $berita->title }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+            @else
+                <i class="fa fa-newspaper-o text-5xl text-gray-400"></i>
+            @endif
         </div>
         <div>
             <p class="text-btp-text leading-relaxed">
-                Pada tanggal 10 Desember 2021 Program Studi Budidaya Tanaman Perkebunan Politeknik Pertanian Negeri Samarinda Melakukan Pengabdian pada Masyarakat "Penyuluhan Pemeliharaan Kebersihan Lingkungan Wisata Gunung Lonceng Samarinda"
+                {{ $berita->excerpt }}
             </p>
+            <div class="mt-4">
+                <a href="/berita/{{ $berita->id }}" class="text-btp-red font-semibold hover:underline">Baca Selengkapnya <i class="fa fa-long-arrow-right ml-1"></i></a>
+            </div>
         </div>
     </div>
 </article>
+@endforeach
+
+<div class="mt-8 text-center">
+    <a href="/berita" class="inline-block bg-btp-red text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#a03838] transition-colors shadow-sm">
+        Lihat Semua Berita <i class="fa fa-long-arrow-right ml-2"></i>
+    </a>
+</div>
 
 @endsection
