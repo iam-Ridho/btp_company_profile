@@ -48,6 +48,7 @@ class ProdukResource extends Resource
                     SpatieMediaLibraryFileUpload::make('image')
                         ->label('Foto Produk')
                         ->collection('image')
+                        ->disk('public')
                         ->image()
                         ->imageResizeMode('cover')
                         ->imageCropAspectRatio('1:1')

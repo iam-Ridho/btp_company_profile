@@ -36,10 +36,11 @@ class StaffResource extends Resource
                     Forms\Components\TextInput::make('nip')
                         ->label('NIP')
                         ->nullable()
-                        ->numeric()
                         ->maxLength(20)
                         ->minLength(1)
-                        ->placeholder('Masukkan NIP (maks. 20 angka)'),
+                        ->placeholder('Masukkan NIP (maks. 20 angka)')
+                        ->type('text')
+                        ->rule('regex:/^[0-9]+$/'),
 
                     Forms\Components\TextInput::make('nama')
                         ->label('Nama Staff')
@@ -49,6 +50,7 @@ class StaffResource extends Resource
                     SpatieMediaLibraryFileUpload::make('photo')
                         ->label('Foto Staff')
                         ->collection('photo')
+                        ->disk('public')
                         ->image()
                         ->imageResizeMode('cover')
                         ->imageCropAspectRatio('1:1')

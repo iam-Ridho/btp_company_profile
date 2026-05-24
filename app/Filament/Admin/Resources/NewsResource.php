@@ -77,6 +77,7 @@ class NewsResource extends Resource
                     SpatieMediaLibraryFileUpload::make('featured')
                         ->label('Foto Berita')
                         ->collection('featured')
+                        ->disk('public')
                         ->image()
                         ->imageResizeMode('cover')
                         ->imageCropAspectRatio('16:9')
