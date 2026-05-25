@@ -93,16 +93,24 @@
                     
                     <!-- KEMAHASISWAAN Dropdown -->
                     <div class="relative group h-full flex items-center">
-                        <a href="#" class="h-full flex items-center px-4 text-sm font-semibold text-white whitespace-nowrap {{ Request::is('kemahasiswaan*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] transition-colors' }}">
+                        <a href="/kemahasiswaan" class="h-full flex items-center px-4 text-sm font-semibold text-white whitespace-nowrap {{ Request::is('kemahasiswaan*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] transition-colors' }}">
                             KEMAHASISWAAN <i class="fa fa-caret-down ml-1"></i>
                         </a>
                         <div class="absolute top-full left-0 hidden group-hover:block w-56 bg-white shadow-lg border-t-2 border-btp-red z-50">
-                            <a href="#" class="block px-4 py-3 text-sm text-btp-text hover:bg-gray-100 hover:text-btp-red border-b border-gray-100">Prestasi Mahasiswa</a>
-                            <a href="#" class="block px-4 py-3 text-sm text-btp-text hover:bg-gray-100 hover:text-btp-red">Kegiatan Hima</a>
+                            @php $kemahasiswaanNavItems = \App\Models\Kemahasiswaan::all(); @endphp
+                            @if($kemahasiswaanNavItems->isNotEmpty())
+                                @foreach($kemahasiswaanNavItems as $navItem)
+                                <a href="/kemahasiswaan?selected={{ $navItem->id }}" class="block px-4 py-3 text-sm text-btp-text hover:bg-gray-100 hover:text-btp-red border-b border-gray-100 last:border-0">
+                                    {{ $navItem->nama }}
+                                </a>
+                                @endforeach
+                            @else
+                                <a href="/kemahasiswaan" class="block px-4 py-3 text-sm text-btp-text hover:bg-gray-100 hover:text-btp-red">Kemahasiswaan</a>
+                            @endif
                         </div>
                     </div>
                     
-                    <a href="#" class="h-full flex items-center px-4 text-sm font-semibold text-white whitespace-nowrap {{ Request::is('lsp*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] transition-colors' }}">LSP</a>
+                    <a href="/lsp" class="h-full flex items-center px-4 text-sm font-semibold text-white whitespace-nowrap {{ Request::is('lsp*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] transition-colors' }}">LSP</a>
                     <a href="/produk" class="h-full flex items-center px-4 text-sm font-semibold text-white whitespace-nowrap {{ Request::is('produk*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] transition-colors' }}">PRODUK</a>
                     
                     <button class="text-white hover:bg-[#cf2e2e] px-4 h-full flex items-center justify-center transition-colors">
@@ -144,16 +152,24 @@
                     
                     <!-- Kemahasiswaan Mobile -->
                     <div x-data="{ open: false }" class="relative">
-                        <button @click="open = !open" class="w-full flex justify-between items-center px-4 py-3 text-sm font-medium text-white hover:bg-[#cf2e2e]">
+                        <button @click="open = !open" class="w-full flex justify-between items-center px-4 py-3 text-sm font-medium text-white {{ Request::is('kemahasiswaan*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e]' }}">
                             KEMAHASISWAAN <i class="fa" :class="open ? 'fa-caret-up' : 'fa-caret-down'"></i>
                         </button>
                         <div x-show="open" class="bg-[#444444]">
-                            <a href="#" class="block pl-8 pr-4 py-2 text-sm font-medium text-gray-200 hover:text-white hover:bg-[#cf2e2e]">Prestasi Mahasiswa</a>
-                            <a href="#" class="block pl-8 pr-4 py-2 text-sm font-medium text-gray-200 hover:text-white hover:bg-[#cf2e2e]">Kegiatan Hima</a>
+                            @php $kemahasiswaanNavItemsMobile = \App\Models\Kemahasiswaan::all(); @endphp
+                            @if($kemahasiswaanNavItemsMobile->isNotEmpty())
+                                @foreach($kemahasiswaanNavItemsMobile as $navItem)
+                                <a href="/kemahasiswaan?selected={{ $navItem->id }}" class="block pl-8 pr-4 py-2 text-sm font-medium text-gray-200 hover:text-white hover:bg-[#cf2e2e]">
+                                    {{ $navItem->nama }}
+                                </a>
+                                @endforeach
+                            @else
+                                <a href="/kemahasiswaan" class="block pl-8 pr-4 py-2 text-sm font-medium text-gray-200 hover:text-white hover:bg-[#cf2e2e]">Kemahasiswaan</a>
+                            @endif
                         </div>
                     </div>
 
-                    <a href="#" class="block px-4 py-3 text-sm font-medium text-white {{ Request::is('lsp*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] hover:text-white' }}">LSP</a>
+                    <a href="/lsp" class="block px-4 py-3 text-sm font-medium text-white {{ Request::is('lsp*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] hover:text-white' }}">LSP</a>
                     <a href="/produk" class="block px-4 py-3 text-sm font-medium text-white {{ Request::is('produk*') ? 'bg-[#cf2e2e]' : 'hover:bg-[#cf2e2e] hover:text-white' }}">PRODUK</a>
                 </nav>
             </div>
@@ -220,10 +236,25 @@
                 <!-- Visitor Stats Widget -->
                 <div class="widget">
                     <h3 class="text-xl font-serif text-btp-heading mb-4">Statistik Pengunjung</h3>
-                    <ul class="space-y-2 text-sm text-btp-text border border-btp-border p-4 rounded">
-                        <li class="flex justify-between"><span class="font-semibold">Online Visitors:</span> 1</li>
-                        <li class="flex justify-between"><span class="font-semibold">Today's Views:</span> 47</li>
-                        <li class="flex justify-between"><span class="font-semibold">Total Views:</span> 5,969</li>
+                    @php
+                        $visitorStats = \App\Services\VisitorService::stats();
+                    @endphp
+                    <ul class="space-y-2 text-sm text-btp-text border border-btp-border p-4 rounded bg-gray-50">
+                        <li class="flex justify-between items-center border-b border-btp-border pb-2">
+                            <span class="font-semibold flex items-center gap-2">
+                                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                Pengunjung Online:
+                            </span> 
+                            <span class="bg-white px-2 py-0.5 rounded border border-gray-200">{{ number_format($visitorStats['online'], 0, ',', '.') }}</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-btp-border py-2">
+                            <span class="font-semibold"><i class="fa fa-calendar-o mr-1"></i> Hari Ini:</span> 
+                            <span class="bg-white px-2 py-0.5 rounded border border-gray-200">{{ number_format($visitorStats['today'], 0, ',', '.') }}</span>
+                        </li>
+                        <li class="flex justify-between items-center pt-2">
+                            <span class="font-semibold"><i class="fa fa-bar-chart mr-1"></i> Total Views:</span> 
+                            <span class="bg-white px-2 py-0.5 rounded border border-gray-200">{{ number_format($visitorStats['total'], 0, ',', '.') }}</span>
+                        </li>
                     </ul>
                 </div>
 
@@ -240,7 +271,7 @@
             <div class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm">
                 <a href="/berita" class="hover:underline">BERITA DAN INFORMASI</a>
                 <span class="text-white/50">|</span>
-                <a href="#" class="hover:underline">DATA DOSEN</a>
+                <a href="/data-dosen" class="hover:underline">DATA DOSEN</a>
                 <span class="text-white/50">|</span>
                 <a href="/data-plp-admin" class="hover:underline">DATA PLP & ADMIN</a>
                 <span class="text-white/50">|</span>
@@ -249,6 +280,8 @@
                 <a href="#" class="hover:underline">KEGIATAN PRODI</a>
                 <span class="text-white/50">|</span>
                 <a href="#" class="hover:underline">KEMAHASISWAAN</a>
+                <span class="text-white/50">|</span>
+                <a href="/lsp" class="hover:underline">LSP</a>
                 <span class="text-white/50">|</span>
                 <a href="#" class="hover:underline">Lab Agronomi</a>
                 <span class="text-white/50">|</span>

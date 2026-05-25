@@ -29,3 +29,11 @@ Route::get('/laboratorium/{id}', [LabController::class, 'show']);
 
 use App\Http\Controllers\ProdukController;
 Route::get('/produk', [ProdukController::class, 'index']);
+
+use App\Http\Controllers\LspController;
+Route::get('/lsp', [LspController::class, 'index']);
+
+use App\Http\Controllers\KemahasiswaanController;
+Route::get('/kemahasiswaan', [KemahasiswaanController::class, 'index'])->name('kemahasiswaan.index');
+Route::get('/kemahasiswaan/{id}', [KemahasiswaanController::class, 'show'])->name('kemahasiswaan.show');
+

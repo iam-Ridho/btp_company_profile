@@ -13,21 +13,29 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('kemahasiswaan', function (Blueprint $table) {
-            $table->dropColumn('image');
-        });
+        if (Schema::hasColumn('kemahasiswaan', 'image')) {
+            Schema::table('kemahasiswaan', function (Blueprint $table) {
+                $table->dropColumn('image');
+            });
+        }
 
-        Schema::table('dosen', function (Blueprint $table) {
-            $table->dropColumn('image');
-        });
+        if (Schema::hasColumn('dosen', 'image')) {
+            Schema::table('dosen', function (Blueprint $table) {
+                $table->dropColumn('image');
+            });
+        }
 
-        Schema::table('staff', function (Blueprint $table) {
-            $table->dropColumn('image');
-        });
+        if (Schema::hasColumn('staff', 'image')) {
+            Schema::table('staff', function (Blueprint $table) {
+                $table->dropColumn('image');
+            });
+        }
 
-        Schema::table('produk', function (Blueprint $table) {
-            $table->dropColumn('image');
-        });
+        if (Schema::hasColumn('produk', 'image')) {
+            Schema::table('produk', function (Blueprint $table) {
+                $table->dropColumn('image');
+            });
+        }
     }
 
     /**

@@ -4,7 +4,7 @@
 <div class="space-y-8">
     
     <!-- Header Section -->
-    <div class="bg-btp-red text-white p-6 rounded-lg shadow-sm mb-8">
+    <div class="bg-btp-green text-white p-6 rounded-lg shadow-sm mb-8">
         <h1 class="text-3xl font-serif mb-4 text-white">Produk Hasil Praktikum</h1>
         <p class="text-lg leading-relaxed mb-6 font-sans">
             Selamat Datang... Anda Mengunjungi Produk Hasil Praktikum BTP. Jika Anda Membutuhkan Bibit, Sayuran Hidroponik, dan Hasil Kebun Percobaan dengan <strong>KUALITAS YANG BAIK, HARGA EKONOMIS DAN TERPERCAYA !!!</strong>
